@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+<!--    get方式-->
+axios({
+    method:"get",
+    url:"http://localhost:8080/ajax-demo/axiosServlet?username=zhangGET"
+}).then(function (response) {
+    alert(response.data);
+})
+//两个的执行顺序不一定
+//post方式
+axios({
+    method:"post",
+    url:"http://localhost:8080/ajax-demo/axiosServlet",
+    data:"username=zhangPOST"
+}).then(function (response) {
+    alert(response.data);
+})
+</script>
+</body>
+</html>

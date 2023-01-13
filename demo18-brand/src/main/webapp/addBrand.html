@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加品牌</title>
+</head>
+<body>
+<h3>添加品牌</h3>
+<form action="" method="post">
+    品牌名称：<input id="brandName" name="brandName"><br>
+    企业名称：<input id="companyName" name="companyName"><br>
+    排序：<input id="ordered" name="ordered"><br>
+    描述信息：<textarea rows="5" cols="20" id="description" name="description"></textarea><br>
+    状态：
+    <input type="radio" name="status" value="0">禁用
+    <input type="radio" name="status" value="1">启用<br>
+
+    <input type="button" id="btn"  value="提交">
+</form>
+
+<script src="js/axios-0.18.0.js"></script>
+
+<script>
+<!--    因为要用异步方式提交表单，所以提交按钮用button类型，不用submit类型，并且表单不用指定action-->
+document.getElementById("btn").onclick = function () {
+    //将表单数据转为json
+    //键不用加双引号，因为这是js对象
+    let formData = {
+        brandName:"",
+        companyName:"",
+        ordered:"",
+        description:"",
+        status:""
+    }
+    //设置数据
+    let brandName = document.getElementById("brandName").value;
+    formData.brandName = brandName;
+    let companyName = document.getElementById("companyName").value;
+    formData.companyName = companyName;
+    let ordered = document.getElementById("ordered").value;
+    formData.ordered = ordered;
+    let description = document.getElementById("description").value;
+    formData.description = description;
+
+    //处理方法不一样
+    let status = document.getElementsByName("status");
+    for (let i = 0; i < status.length; i++) {
+        //被选中
+        if (status[i].checked) {
+            formData.status = status[i].value;
+        }
+    }
+
+    // console.log(formData);
+
+    axios({
+        method:"post",
+        url:"http://localhost:8080/brand-demo/addServlet",
+        // data:{brandName:"哈哈"}
+        //测试数据替换
+        data:formData
+    }).then(function (response) {
+        // 判断是否添加成功
+        if (response.data == "success") {
+            location.href = "http://localhost:8080/brand-demo/brand.html";
+        }
+    })
+}
+</script>
+</body>
+</html>

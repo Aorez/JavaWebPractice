@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" method="get" id="form">
+    <input type="text" name="text" id="text">
+    <input type="submit">
+</form>
+
+
+<script>
+    document.getElementById("form").onsubmit = function () {
+        //这里不能用innerText和innerHTML
+        let s = document.getElementById("text").value;
+        if (s == "haha") {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

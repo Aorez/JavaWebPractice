@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function add(a, b) {
+        return a + b;
+    }
+    console.log(add(1, 2));
+
+    var add = function (a, b) {
+        return a + b + 1;
+    }
+    console.log(add(1, 2));
+
+    //参数个数可以不一致
+    console.log(add(1, 2, 3));
+    console.log(add(1));
+</script>
+</body>
+</html>

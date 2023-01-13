@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var a = new Array(0, 1, 2, 3);
+    console.log(typeof a, a);
+    var a = [0, 1, 2];
+    console.log(a);
+
+    a[10] = 10;
+    a[6] = "6";
+    console.log(a);
+    console.log(a[5]);
+
+    a.push("11");
+    a.push(12);
+    console.log(a);
+
+    console.log(a.length);
+    var b = a.splice(11, 2);
+    console.log(a.length);
+    console.log(a);
+    console.log(b);
+</script>
+</body>
+</html>

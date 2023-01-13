@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--两种事件绑定方式-->
+<input type="button" value="开灯" id="turnOn" onclick="turnOn()">
+<img src="../imgs/off.gif" id="light">
+<input type="button" value="关灯" id="turnOff">
+
+<script>
+    function turnOn() {
+        document.getElementById("light").src = "../imgs/on.gif";
+    }
+
+    var f = function turnOff() {
+        document.getElementById("light").src = "../imgs/off.gif";
+    }
+
+    document.getElementById("turnOff").onclick = f;
+</script>
+</body>
+</html>

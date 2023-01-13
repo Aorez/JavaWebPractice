@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    window.alert("1");
+    alert("2");
+
+    var a = confirm("确认？");
+    if (a) {
+        alert("确认");
+    }
+    else {
+        alert("取消");
+    }
+
+    setTimeout(function () {
+        alert("3");
+    }, 3000);
+
+    setInterval(function () {
+        alert("4");
+    }, 3000);
+</script>
+</body>
+</html>

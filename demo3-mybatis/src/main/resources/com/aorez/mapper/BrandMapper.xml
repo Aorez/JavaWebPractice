@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aorez.mapper.BrandMapper">
+
+<!--因为Brand类中用了驼峰命名，而数据库字段中用了下划线命名，所以映射出错-->
+<!--    <select id="selectAll" resultType="brand">-->
+<!--        select * from tb_brand;-->
+<!--    </select>-->
+
+<!--    别名-->
+<!--    <select id="selectAll" resultType="brand">-->
+<!--        select id, brand_name as brandName, company_name as companyName, ordered, description, status-->
+<!--        from tb_brand;-->
+<!--    </select>-->
+
+<!--    sql片段-->
+<!--    <sql id="brand_column">-->
+<!--        id, brand_name as brandName, company_name as companyName, ordered, description, status-->
+<!--    </sql>-->
+<!--        <select id="selectAll" resultType="brand">-->
+<!--            select-->
+<!--            <include refid="brand_column"></include>-->
+<!--            from tb_brand;-->
+<!--        </select>-->
+
+<!--    resultMap-->
+    <resultMap id="brandResultMap" type="brand">
+        <result column="brand_name" property="brandName" />
+        <result column="company_name" property="companyName" />
+    </resultMap>
+    <select id="selectAll" resultMap="brandResultMap">
+            select * from tb_brand;
+        </select>
+
+    <select id="selectById" resultMap="brandResultMap">
+        select * from tb_brand where id=#{id};
+    </select>
+
+    <select id="selectByCondition1" resultMap="brandResultMap">
+        select * from tb_brand
+        where status=#{status} and company_name like #{companyName} and brand_name like #{brandName};
+    </select>
+<!--    这样写是可以查询到的，MyBatis自动把多个参数写进了Map中，并且映射为param1到第一个参数，param2到第二个参数等等-->
+    <select id="selectByCondition6" resultMap="brandResultMap">
+        select * from tb_brand
+        where status=#{param1} and company_name like #{param2} and brand_name like #{param3};
+    </select>
+
+    <sql id="selectByConditionExpression">
+        select * from tb_brand
+        where status=#{status} and company_name like #{companyName} and brand_name like #{brandName};
+    </sql>
+    <select id="selectByCondition2" resultMap="brandResultMap">
+        <include refid="selectByConditionExpression"></include>
+    </select>
+
+    <select id="selectByCondition3" resultMap="brandResultMap">
+        <include refid="selectByConditionExpression"></include>
+    </select>
+
+<!--    动态sql解决参数为空的问题-->
+    <select id="selectByCondition4" resultMap="brandResultMap">
+        select * from tb_brand
+        where
+            <if test="status != null">
+                status=#{status}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and company_name like #{companyName}
+            </if>
+            <if test="brandName != null and brandName != ''">
+                and brand_name like #{brandName}
+            </if>
+    </select>
+
+<!--    或者加入“true”-->
+<!--    where标签解决参数缺少时多出来一个and的时候sql报错的问题-->
+    <select id="selectByCondition5" resultMap="brandResultMap">
+<!--        select * from tb_brand-->
+<!--        where true-->
+<!--        <if test="status != null">-->
+<!--            and status=#{status}-->
+<!--        </if>-->
+<!--        <if test="companyName != null and companyName != ''">-->
+<!--            and company_name like #{companyName}-->
+<!--        </if>-->
+<!--        <if test="brandName != null and brandName != ''">-->
+<!--            and brand_name like #{brandName}-->
+<!--        </if>-->
+        select * from tb_brand
+            <where>
+                <if test="status != null">
+                    status=#{status}
+                </if>
+                <if test="companyName != null and companyName != ''">
+                    and company_name like #{companyName}
+                </if>
+                <if test="brandName != null and brandName != ''">
+                    and brand_name like #{brandName}
+                </if>
+            </where>
+    </select>
+
+<!--    如果单条件查询三个条件的参数都是null，则sql会多出来一个where，解决方法是where标签或者otherwise标签写恒等式-->
+    <select id="selectByConditionSingle" resultMap="brandResultMap">
+        select * from tb_brand
+        where
+            <choose>
+                <when test="status != null">
+                    status=#{status}
+                </when>
+                <when test="companyName != null and companyName != ''">
+                    company_name like #{companyName}
+                </when>
+                <when test="brandName != null and brandName != ''">
+                    brand_name like #{brandName}
+                </when>
+                <otherwise>true</otherwise>
+            </choose>
+    </select>
+
+    <!--    useGeneratedKeys和keyProperty是为了给程序中的id赋值，如果没有，在程序中获取不到新添加的项的id-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand(brand_name, company_name, ordered, description, status)
+        values(#{brandName}, #{companyName}, #{ordered}, #{description}, #{status});
+    </insert>
+
+    <update id="update">
+        update tb_brand
+        set brand_name=#{brandName},company_name=#{companyName},ordered=#{ordered},description=#{description},status=#{status}
+        where id=#{id};
+    </update>
+
+    <update id="updateDynamically">
+        update tb_brand
+        <set>
+            <if test="brandName != null and brandName != ''">
+                brand_name=#{brandName},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name=#{companyName},
+            </if>
+            <if test="ordered != null and ordered != ''">
+                ordered=#{ordered},
+            </if>
+            <if test="description != null and description != ''">
+                description=#{description},
+            </if>
+            status=#{status}
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from tb_brand where id=#{id};
+    </delete>
+
+<!--    item和#{}对应-->
+<!--    MyBatis不仅会把多参数转为Map，数组参数也会转为Map，key为"array"，value为数组-->
+    <delete id="deleteByIds">
+        delete from tb_brand where id in
+        <foreach collection="array"  item="id" separator="," open="(" close=");">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByIds2">
+        delete from tb_brand where id in
+        <foreach collection="idsParam"  item="id" separator="," open="(" close=");">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByIds3">
+        delete from tb_brand where id in
+        <foreach collection="idsMap"  item="id" separator="," open="(" close=");">
+            #{id}
+        </foreach>
+    </delete>
+
+<!--    特殊占位符-->
+    <select id="selectById2" resultMap="brandResultMap">
+        select * from tb_brand
+        where id=#{param.id}
+    </select>
+
+</mapper>

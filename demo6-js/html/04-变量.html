@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var a = 20;
+    console.log(a);
+    a = "弱类型";
+    console.log(a);
+
+    {
+        var b = "var全局";
+    }
+    console.log(b);
+    var b = "可以重复定义"
+
+//    ECMAScript6增加let和const
+    {
+        let c = "在当前代码块内有效";
+        // let c = "不能重复定义"
+    }
+    // alert(c);
+
+    // const D = "不可重复定义";
+    const D = "常量";
+    // D = "不可修改";
+</script>
+</body>
+</html>

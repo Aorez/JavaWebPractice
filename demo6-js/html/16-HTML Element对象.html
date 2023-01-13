@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="../imgs/off.gif" id="light">
+<br>
+<div class="cls">haha1</div>
+<br>
+<div class="cls">haha2</div>
+<br>
+<input type="checkbox" name="hobby"><label>电影</label>
+<input type="checkbox" name="hobby"><label>游戏</label>
+
+<script>
+    let img = document.getElementById("light");
+    img.src = "../imgs/on.gif";
+    
+    let divs = document.getElementsByTagName("div");
+    for (let i = 0; i < divs.length; i++) {
+        //都可以设置文本内容
+        // divs[i].innerText = "ha" + i;
+        divs[i].innerHTML = "ha" + i;
+    }
+
+    let names = document.getElementsByName("hobby");
+    for (let i = 0; i < names.length; i++) {
+        names[i].checked = true;
+    }
+</script>
+</body>
+</html>

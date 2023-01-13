@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    别名，定义之后Mapper的xml文件中的resultType可以简写为类名，并且不区分大小写-->
+    <typeAliases>
+        <package name="com.aorez.pojo"/>
+    </typeAliases>
+
+<!--    environments可以定义多个environment，并在default切换-->
+    <environments default="development">
+        <environment id="development">
+<!--            事务管理-->
+            <transactionManager type="JDBC"/>
+<!--            连接池选项-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql:///db1?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root221899"/>
+            </dataSource>
+        </environment>
+<!--生产环境、测试环境等等-->
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql:///db1?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root221899"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        没有写Mapper接口之前，xml文件在同级目录，写Mapper接口之后，xml文件移动到和包名一样的文件夹目录中，所以修改了-->
+<!--        <mapper resource="UserMapper.xml"/>-->
+<!--        如果xml文件移动到和包名一样的文件夹目录中，可以用包扫描简化写法-->
+<!--        <mapper resource="com/aorez/mapper/UserMapper.xml"/>-->
+        <package name="com.aorez.mapper"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    var a1 = 20;
+    var a2 = "20";
+    //==先进行类型转换再判断是否相等
+    if (a1 == a2) {
+        console.log("相等");
+    }
+    else {
+        console.log("不等");
+    }
+    //类型不一样则不等
+    if (a1 === a2) {
+        console.log("相等");
+    }
+    else {
+        console.log("不等");
+    }
+
+    var a = +"是NaN";
+    console.log(typeof a, a);
+    var a = "是NaN";
+    console.log(parseInt(a));
+
+    //string转number
+    var a = "20";
+    console.log(typeof (a+1), a + 1);
+    console.log(typeof (1+a), 1 + a);
+    console.log(typeof (parseInt(a) + 1), parseInt(a) + 1);
+
+    //number转boolean
+    var a = +"NaN是false";
+    if (a) {
+        console.log(true);
+    }
+    else {
+        console.log(false);
+    }
+
+    //string转boolean
+    var a = "有字符是true";
+    if (a) {
+        console.log(true);
+    }
+    else {
+        console.log(false);
+    }
+    var a = "";
+    if (a) {
+        console.log(true);
+    }
+    else {
+        console.log(false);
+    }
+</script>
+</body>
+</html>
